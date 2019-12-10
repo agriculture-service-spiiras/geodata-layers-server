@@ -1,40 +1,46 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const request = require("request");
+const router = express.Router();
 
-/* GET home page. */
-router.get("/", function(req, res, next) {
-  res.json(req.db.getLayers());
+const { layers } = require("../configs/layers");
+
+/* GET layers listing. */
+router.get("/", function(req, res) {
+  res.send({ layers });
+  // request(`http://localhost:3010`, (error, response, body) => {
+  //   if (error) {
+  //     res.sendStatus(502);
+  //   } else {
+  //     if (response.statusCode !== 404) {
+  //       res.send(JSON.parse(body));
+  //     } else {
+  //       res.sendStatus(404);
+  //     }
+  //   }
+  // });
 });
 
-router.get("/configs/:id", function(req, res, next) {
-  const { id } = req.params;
-  const config = req.db.getLayerConfig(id);
-  if (config) {
-    res.json(config);
-  } else {
-    res.send(404);
-  }
+router.get("/schemes/:id", function(req, res) {
+  const id = req.params.id;
+  request(`http://localhost:3010/schemes/${id}`, (error, response, body) => {
+    if (error) {
+      res.sendStatus(502);
+    } else {
+      if (response.statusCode !== 404) {
+        res.send(JSON.parse(body));
+      } else {
+        res.sendStatus(404);
+      }
+    }
+  });
 });
 
-router.post("/configs", function(req, res, next) {
-  const layer = req.body;
-  const result = req.db.createLayer(layer);
-  if (result) {
-    res.send(200);
-  } else {
-    res.send(400);
-  }
+router.get("/geodata", function(req, res) {
+  res.send(200);
 });
 
-router.put("/configs/:id", function(req, res, next) {
-  const { id } = req.params;
-  const layer = req.body;
-  const result = req.db.updateLayer(id, layer);
-  if (result) {
-    res.send(200);
-  } else {
-    res.send(400);
-  }
+router.get("/data", function(req, res) {
+  res.send(200);
 });
 
 module.exports = router;
