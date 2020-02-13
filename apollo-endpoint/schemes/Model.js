@@ -2,40 +2,40 @@ const { RESTDataSource } = require("apollo-datasource-rest");
 const fp = require("lodash/fp");
 const config = require("config");
 
-const mockScheme = {
-  id: 1,
-  name: "test-scheme",
-  parentId: null
-};
+// const mockScheme = {
+//   id: 1,
+//   name: "test-scheme",
+//   parentId: null
+// };
 
-const mockRelatedScheme = {
-  id: 1,
-  name: "test-scheme",
-  parentId: null,
-  objects: [
-    {
-      id: 1,
-      name: "circle-shape",
-      objectFormat: {
-        shape: "circle",
-        color: "blue"
-      }
-    }
-  ],
-  services: [
-    {
-      id: 1,
-      name: "static",
-      serviceOptions: {}
-    }
-  ],
-  childLayers: [
-    {
-      id: 2,
-      name: "test-scheme-child"
-    }
-  ]
-};
+// const mockRelatedScheme = {
+//   id: 1,
+//   name: "test-scheme",
+//   parentId: null,
+//   objects: [
+//     {
+//       id: 1,
+//       name: "circle-shape",
+//       objectFormat: {
+//         shape: "circle",
+//         color: "blue"
+//       }
+//     }
+//   ],
+//   services: [
+//     {
+//       id: 1,
+//       name: "static",
+//       serviceOptions: {}
+//     }
+//   ],
+//   childLayers: [
+//     {
+//       id: 2,
+//       name: "test-scheme-child"
+//     }
+//   ]
+// };
 
 class Model extends RESTDataSource {
   constructor() {
@@ -44,28 +44,22 @@ class Model extends RESTDataSource {
   }
 
   async getScheme(id) {
-    // return this.get(
-    //   `schemes/${id}?$eager=[objects, services, childLayers]`
-    // );
-    const foundScheme = mockScheme;
-    return foundScheme;
+    return this.get(`schemes/${id}`);
+    // const foundScheme = mockScheme;
+    // return foundScheme;
   }
 
   async getSchemes() {
-    // return this.get(
-    //   "schemes?$eager=[objects, services, childLayers]"
-    // );
-    const foundSchemes = [mockScheme];
-    return foundSchemes;
+    return this.get("schemes");
+    // const foundSchemes = [mockScheme];
+    // return foundSchemes;
   }
 
   async getRelatedScheme(id, relations) {
     const expression = `[${relations.join(", ")}]`;
-    // return this.get(
-    //   `schemes/${id}?$joinRelated=${expression}`
-    // );
-    const foundScheme = mockRelatedScheme;
-    return foundScheme;
+    return this.get(`schemes/${id}?$eager=${expression}`);
+    // const foundScheme = mockRelatedScheme;
+    // return foundScheme;
   }
 }
 
