@@ -1,35 +1,39 @@
-const expractRelateProperty = async (id, relation, model) => {
+const extractRelateProperty = async (id, relation, model) => {
   const completedScheme = await model.getRelatedScheme(id, [relation]);
   return completedScheme[relation];
 };
 
 const resolvers = {
   Query: {
-    getMapSchemeById: async (parent, { id }, { dataSources }) => {
-      return dataSources.schemesModel.getScheme(id);
+    getMapLayerSchemeById: async (parent, { id }, { dataSources }) => {
+      return dataSources.mapSchemesModel.getScheme(id);
     },
-    getMapRootSchemes: async (parent, args, { dataSources }) => {
-      const foundSchemes = await dataSources.schemesModel.getSchemes();
+    getMapLayerMainSchemes: async (parent, args, { dataSources }) => {
+      const foundSchemes = await dataSources.mapSchemesModel.getSchemes();
       return foundSchemes.filter(({ parentId }) => !parentId);
     }
   },
-  MapScheme: {
+  MapLayerScheme: {
     objects: ({ id }, args, { dataSources }) => {
-      return expractRelateProperty(id, "objects", dataSources.schemesModel);
+      return extractRelateProperty(id, "objects", dataSources.mapSchemesModel);
     },
     services: ({ id }, args, { dataSources }) => {
-      return expractRelateProperty(id, "services", dataSources.schemesModel);
+      return extractRelateProperty(id, "services", dataSources.mapSchemesModel);
     },
     childLayers: ({ id }, args, { dataSources }) => {
-      return expractRelateProperty(id, "childLayers", dataSources.schemesModel);
+      return extractRelateProperty(
+        id,
+        "childLayers",
+        dataSources.mapSchemesModel
+      );
     }
   },
-  MapSchemeObject: {
+  MapLayerSchemeObject: {
     format: object => {
       return object["objectFormat"];
     }
   },
-  MapSchemeService: {
+  MapLayerSchemeService: {
     options: service => {
       return service["serviceOptions"];
     }
