@@ -13,6 +13,7 @@ const typeDef = gql`
 
   type MapSubstrate {
     service: String!
+    crs: String!
     options: JSON!
   }
 `;

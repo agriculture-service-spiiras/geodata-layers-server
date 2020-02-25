@@ -11,6 +11,7 @@ const mockPosition = {
 
 const mockSubstrate = {
   service: "wms",
+  crs: "3857",
   options: {
     url: "http://192.168.0.130:14002/geoserver/wms",
     layers: "namespace:tiles",
