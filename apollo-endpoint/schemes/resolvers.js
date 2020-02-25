@@ -5,15 +5,15 @@ const expractRelateProperty = async (id, relation, model) => {
 
 const resolvers = {
   Query: {
-    getSchemeById: async (parent, { id }, { dataSources }) => {
+    getMapSchemeById: async (parent, { id }, { dataSources }) => {
       return dataSources.schemesModel.getScheme(id);
     },
-    getRootSchemes: async (parent, args, { dataSources }) => {
+    getMapRootSchemes: async (parent, args, { dataSources }) => {
       const foundSchemes = await dataSources.schemesModel.getSchemes();
       return foundSchemes.filter(({ parentId }) => !parentId);
     }
   },
-  Scheme: {
+  MapScheme: {
     objects: ({ id }, args, { dataSources }) => {
       return expractRelateProperty(id, "objects", dataSources.schemesModel);
     },
@@ -24,12 +24,12 @@ const resolvers = {
       return expractRelateProperty(id, "childLayers", dataSources.schemesModel);
     }
   },
-  SchemeObject: {
+  MapSchemeObject: {
     format: object => {
       return object["objectFormat"];
     }
   },
-  SchemeService: {
+  MapSchemeService: {
     options: service => {
       return service["serviceOptions"];
     }
