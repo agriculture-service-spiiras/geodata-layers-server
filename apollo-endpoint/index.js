@@ -7,6 +7,7 @@ const {
 
 const mapOptions = require("./mapOptions");
 const schemes = require("./schemes");
+const objects = require("./objects");
 
 const typeDef = gql`
   scalar JSON
@@ -15,6 +16,7 @@ const typeDef = gql`
   scalar CoordinatesScalar
 
   type Query
+  type Subscription
 `;
 
 const resolvers = {
@@ -24,11 +26,17 @@ const resolvers = {
 };
 
 const server = new ApolloServer({
-  typeDefs: [typeDef, mapOptions.typeDef, schemes.typeDef],
-  resolvers: [resolvers, mapOptions.resolvers, schemes.resolvers],
+  typeDefs: [typeDef, mapOptions.typeDef, schemes.typeDef, objects.typeDef],
+  resolvers: [
+    resolvers,
+    mapOptions.resolvers,
+    schemes.resolvers,
+    objects.resolvers
+  ],
   dataSources: () => ({
     mapOptionsModel: new mapOptions.Model(),
     mapLayerSchemesModel: new schemes.Model(),
+    mapLayerObjectsModel: new objects.Model()
   })
 });
 

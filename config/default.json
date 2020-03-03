@@ -1,6 +1,7 @@
 {
   "PORT": 3001,
   "routes": {
-    "schemes": "http://localhost:3020"
+    "schemes": "http://localhost:3020",
+    "objects": "http://localhost:3021"
   }
 }
