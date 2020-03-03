@@ -6,8 +6,8 @@ const {
 } = require("graphql-geojson");
 
 const mapOptions = require("./mapOptions");
-const schemes = require("./schemes");
-const objects = require("./objects");
+const mapLayerSchemes = require("./mapLayerSchemes");
+const mapLayerObjects = require("./mapLayerObjects");
 
 const typeDef = gql`
   scalar JSON
@@ -26,17 +26,22 @@ const resolvers = {
 };
 
 const server = new ApolloServer({
-  typeDefs: [typeDef, mapOptions.typeDef, schemes.typeDef, objects.typeDef],
+  typeDefs: [
+    typeDef,
+    mapOptions.typeDef,
+    mapLayerSchemes.typeDef,
+    mapLayerObjects.typeDef
+  ],
   resolvers: [
     resolvers,
     mapOptions.resolvers,
-    schemes.resolvers,
-    objects.resolvers
+    mapLayerSchemes.resolvers,
+    mapLayerObjects.resolvers
   ],
   dataSources: () => ({
     mapOptionsModel: new mapOptions.Model(),
-    mapLayerSchemesModel: new schemes.Model(),
-    mapLayerObjectsModel: new objects.Model()
+    mapLayerSchemesModel: new mapLayerSchemes.Model(),
+    mapLayerObjectsModel: new mapLayerObjects.Model()
   })
 });
 
