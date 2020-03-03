@@ -28,7 +28,7 @@ const server = new ApolloServer({
   resolvers: [resolvers, mapOptions.resolvers, schemes.resolvers],
   dataSources: () => ({
     mapOptionsModel: new mapOptions.Model(),
-    mapSchemesModel: new schemes.Model(),
+    mapLayerSchemesModel: new schemes.Model(),
   })
 });
 
