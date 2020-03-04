@@ -1,4 +1,4 @@
-const { ApolloServer, gql } = require("apollo-server-express");
+const { ApolloServer, gql, PubSub } = require("apollo-server-express");
 const GraphQLJSON = require("graphql-type-json");
 const {
   FeatureCollectionObject,
@@ -8,6 +8,8 @@ const {
 const mapOptions = require("./mapOptions");
 const mapLayerSchemes = require("./mapLayerSchemes");
 const mapLayerObjects = require("./mapLayerObjects");
+
+const eventBus = new PubSub();
 
 const typeDef = gql`
   scalar JSON
@@ -38,6 +40,9 @@ const server = new ApolloServer({
     mapLayerSchemes.resolvers,
     mapLayerObjects.resolvers
   ],
+  context: () => ({
+    eventBus
+  }),
   dataSources: () => ({
     mapOptionsModel: new mapOptions.Model(),
     mapLayerSchemesModel: new mapLayerSchemes.Model(),
