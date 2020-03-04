@@ -2,15 +2,16 @@ const { gql } = require("apollo-server-express");
 
 const typeDef = gql`
   extend type Query {
-    getMapLayerObjects(layer: ID!): MapLayerObjects!
+    getMapLayers: [MapLayerObjects]
+    getMapLayerObjects(layerId: ID!): MapLayerObjects!
   }
 
   extend type Subscription {
-    mapLayerObjects(layer: ID!): MapLayerObjects!
+    mapLayerObjectsUpdated(layerId: ID!): MapLayerObjects
   }
 
   type MapLayerObjects {
-    layer: ID!
+    layerId: ID!
     objects: FeatureCollection!
   }
 `;

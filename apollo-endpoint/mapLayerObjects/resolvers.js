@@ -1,18 +1,21 @@
-const { PubSub } = require("apollo-server");
+const { withFilter } = require("apollo-server-express");
 
-const pubsub = new PubSub();
-
-const POST_ADDED = "POST_ADDED";
+const MAP_LAYER_OBJECTS_UPDATED = "MAP_LAYER_OBJECTS_UPDATED";
 
 const resolvers = {
   Query: {
-    getMapLayerObjects: async (parent, { layer }, { dataSources }) =>
-      dataSources.mapLayerObjectsModel.getLayerObjects(layer)
+    getMapLayers: async (parent, args, { dataSources }) =>
+      dataSources.mapLayerObjectsModel.getLayers(),
+    getMapLayerObjects: async (parent, { layerId }, { dataSources }) =>
+      dataSources.mapLayerObjectsModel.getLayerObjects(layerId)
   },
 
   Subscription: {
-    mapLayerObjects: {
-      subscribe: () => pubsub.asyncIterator([POST_ADDED])
+    mapLayerObjectsUpdated: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator([MAP_LAYER_OBJECTS_UPDATED]),
+        (payload, variables) => payload.layerId === variables.layerId
+      )
     }
   }
 };
