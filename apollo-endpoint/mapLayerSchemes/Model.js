@@ -39,7 +39,7 @@ const mockRelatedScheme = {
 class Model extends RESTDataSource {
   constructor() {
     super();
-    this.baseURL = config.routes.schemes;
+    this.baseURL = config.routes.mapLayerSchemes;
   }
 
   async getScheme(id) {

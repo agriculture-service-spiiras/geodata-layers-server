@@ -1,7 +1,7 @@
 {
   "PORT": 3001,
   "routes": {
-    "schemes": "http://localhost:3020",
-    "objects": "http://localhost:3021"
+    "mapLayerSchemes": "http://localhost:3020",
+    "mapLayerObjects": "http://localhost:3021"
   }
 }

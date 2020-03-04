@@ -54,7 +54,7 @@ const mockObjects = {
 class Model extends RESTDataSource {
   constructor() {
     super();
-    this.baseURL = config.routes.objects;
+    this.baseURL = config.routes.mapLayerObjects;
   }
 
   getLayerObjects(layer) {
