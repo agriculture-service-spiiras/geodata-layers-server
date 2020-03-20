@@ -43,22 +43,41 @@ class Model extends RESTDataSource {
   }
 
   async getScheme(id) {
-    // return this.get(`schemes/${id}`);
-    const foundScheme = mockScheme;
+    const foundScheme = await this.get(`schemes/${id}`);
+
+    if (!foundScheme) {
+      return null;
+    }
+
     return foundScheme;
+    // const foundScheme = mockScheme;
+    // return foundScheme;
   }
 
   async getSchemes() {
-    // return this.get("schemes");
-    const foundSchemes = [mockScheme];
+    const { data: foundSchemes } = await this.get("schemes");
+
+    if (!foundSchemes) {
+      return [];
+    }
+
     return foundSchemes;
+    // const foundSchemes = [mockScheme];
+    // return foundSchemes;
   }
 
   async getRelatedScheme(id, relations) {
     const expression = `[${relations.join(", ")}]`;
-    // return this.get(`schemes/${id}?$eager=${expression}`);
-    const foundScheme = mockRelatedScheme;
+
+    const foundScheme = await this.get(`schemes/${id}?$eager=${expression}`);
+
+    if (!foundScheme) {
+      return null;
+    }
+
     return foundScheme;
+    // const foundScheme = mockRelatedScheme;
+    // return foundScheme;
   }
 }
 

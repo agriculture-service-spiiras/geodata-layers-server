@@ -26,7 +26,6 @@ class Model extends RESTDataSource {
   }
 
   async getPosition() {
-    // return this.get(`schemes/${id}`);
     const foundPosition = mockPosition;
     return foundPosition;
   }
