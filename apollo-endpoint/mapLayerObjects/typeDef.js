@@ -2,7 +2,7 @@ const { gql } = require("apollo-server-express");
 
 const typeDef = gql`
   extend type MapLayer {
-    objectsGeodata: FeatureCollection!
+    objectsGeodata: FeatureCollection
   }
   # extend type Subscription {
   #   mapLayerObjectsUpdated(layerId: ID!): FeatureCollection!

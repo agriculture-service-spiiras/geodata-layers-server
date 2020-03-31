@@ -12,7 +12,13 @@ class GeodataAPI extends RESTDataSource {
   }
 
   async getLayerObjects(layerId) {
-    const objects = await this.get(`objects-geodata/${layerId}`);
+    const data = await this.get(`objects-geodata/${layerId}`);
+
+    if (!data) {
+      return null;
+    }
+
+    const { objects } = data;
     return objects;
   }
 
