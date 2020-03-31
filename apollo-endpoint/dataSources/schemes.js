@@ -1,42 +1,7 @@
 const { RESTDataSource } = require("apollo-datasource-rest");
 const config = require("config");
 
-const mockScheme = {
-  id: 1,
-  name: "test-scheme",
-  parentId: null
-};
-
-const mockRelatedScheme = {
-  id: 1,
-  name: "test-scheme",
-  parentId: null,
-  objects: [
-    {
-      id: 1,
-      name: "circle-shape",
-      objectFormat: {
-        shape: "circle",
-        color: "blue"
-      }
-    }
-  ],
-  services: [
-    {
-      id: 1,
-      name: "static",
-      serviceOptions: {}
-    }
-  ],
-  childLayers: [
-    {
-      id: 2,
-      name: "test-scheme-child"
-    }
-  ]
-};
-
-class Model extends RESTDataSource {
+class SchemesAPI extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = config.routes.mapLayerSchemes;
@@ -50,8 +15,6 @@ class Model extends RESTDataSource {
     }
 
     return foundScheme;
-    // const foundScheme = mockScheme;
-    // return foundScheme;
   }
 
   async getSchemes() {
@@ -62,8 +25,6 @@ class Model extends RESTDataSource {
     }
 
     return foundSchemes;
-    // const foundSchemes = [mockScheme];
-    // return foundSchemes;
   }
 
   async getRelatedScheme(id, relations) {
@@ -76,9 +37,7 @@ class Model extends RESTDataSource {
     }
 
     return foundScheme;
-    // const foundScheme = mockRelatedScheme;
-    // return foundScheme;
   }
 }
 
-module.exports = Model;
+module.exports = SchemesAPI;

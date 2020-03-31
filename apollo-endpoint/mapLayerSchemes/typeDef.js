@@ -1,18 +1,11 @@
 const { gql } = require("apollo-server-express");
 
 const typeDef = gql`
-  extend type Query {
-    getMapLayerSchemeById(id: ID!): MapLayerScheme!
-    getMapLayerMainSchemes: [MapLayerScheme!]
-  }
-
-  type MapLayerScheme {
-    id: ID!
-    name: String!
+  extend type MapLayer {
     dataSource: String!
-    objects: [MapLayerSchemeObject]!
-    services: [MapLayerSchemeService]!
-    childLayers: [MapLayerScheme]!
+    objectsSchemes: [MapLayerSchemeObject]!
+    servicesSchemes: [MapLayerSchemeService]!
+    childLayers: [MapLayer]!
   }
 
   type MapLayerSchemeObject {

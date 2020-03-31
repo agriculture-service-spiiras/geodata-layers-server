@@ -4,42 +4,31 @@ const extractRelateProperty = async (id, relation, model) => {
 };
 
 const resolvers = {
-  Query: {
-    getMapLayerSchemeById: async (parent, { id }, { dataSources }) => {
-      return dataSources.mapLayerSchemesModel.getScheme(id);
-    },
-    getMapLayerMainSchemes: async (parent, args, { dataSources }) => {
-      const foundSchemes = await dataSources.mapLayerSchemesModel.getSchemes();
-      return foundSchemes.filter(({ parentId }) => !parentId);
-    }
-  },
-  MapLayerScheme: {
-    objects: ({ id }, args, { dataSources }) => {
+  MapLayer: {
+    objectsSchemes: ({ id }, args, { dataSources }) => {
       return extractRelateProperty(
         id,
         "objects",
-        dataSources.mapLayerSchemesModel
+        dataSources.layerSchemesModel
       );
     },
-    services: ({ id }, args, { dataSources }) => {
+    servicesSchemes: ({ id }, args, { dataSources }) => {
       return extractRelateProperty(
         id,
         "services",
-        dataSources.mapLayerSchemesModel
+        dataSources.layerSchemesModel
       );
     },
     childLayers: ({ id }, args, { dataSources }) => {
       return extractRelateProperty(
         id,
         "childLayers",
-        dataSources.mapLayerSchemesModel
+        dataSources.layerSchemesModel
       );
     }
   },
   MapLayerSchemeObject: {
-    format: object => {
-      return object["objectFormat"];
-    }
+    format: object => object["objectFormat"]
   },
   MapLayerSchemeService: {
     options: service => {

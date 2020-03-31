@@ -6,8 +6,11 @@ const {
 } = require("graphql-geojson");
 
 const mapOptions = require("./mapOptions");
+const mapLayers = require("./mapLayers");
 const mapLayerSchemes = require("./mapLayerSchemes");
 const mapLayerObjects = require("./mapLayerObjects");
+
+const { LayerSchemesModel, LayerGeodataModel } = require("./dataSources");
 
 const eventBus = new PubSub();
 
@@ -18,7 +21,7 @@ const typeDef = gql`
   scalar CoordinatesScalar
 
   type Query
-  type Subscription
+  # type Subscription
 `;
 
 const resolvers = {
@@ -31,12 +34,14 @@ const server = new ApolloServer({
   typeDefs: [
     typeDef,
     mapOptions.typeDef,
+    mapLayers.typeDef,
     mapLayerSchemes.typeDef,
     mapLayerObjects.typeDef
   ],
   resolvers: [
     resolvers,
     mapOptions.resolvers,
+    mapLayers.resolvers,
     mapLayerSchemes.resolvers,
     mapLayerObjects.resolvers
   ],
@@ -45,8 +50,8 @@ const server = new ApolloServer({
   }),
   dataSources: () => ({
     mapOptionsModel: new mapOptions.Model(),
-    mapLayerSchemesModel: new mapLayerSchemes.Model(),
-    mapLayerObjectsModel: new mapLayerObjects.Model()
+    layerGeodataModel: new LayerGeodataModel(),
+    layerSchemesModel: new LayerSchemesModel()
   })
 });
 
