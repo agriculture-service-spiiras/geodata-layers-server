@@ -9,11 +9,11 @@ const typeDef = gql`
 
   extend type Mutation {
     addVehicleTask(vehicle: ID!, task: JSON!): VehicleTask
-    cancelVehicleTask(vehicle: ID!, task: ID!): [VehicleTask]!
+    cancelVehicleTask(vehicle: ID!, task: ID!): AerialVehicle!
   }
 
   extend type Subscription {
-    vehicleUpdated: AerialVehicle!
+    updatedVehicle(id: ID!): AerialVehicle!
   }
 
   type AerialVehicle {

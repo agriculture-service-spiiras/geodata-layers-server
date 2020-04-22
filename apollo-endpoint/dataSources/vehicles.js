@@ -370,7 +370,7 @@ class VehiclesAPI extends RESTDataSource {
       );
     }
 
-    return updatedVehicle.tasks;
+    return updatedVehicle;
   }
 }
 

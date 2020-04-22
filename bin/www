@@ -9,6 +9,7 @@ const http = require("http");
 const config = require("config");
 
 const app = require("../app");
+const apolloServer = require("../apollo-endpoint");
 
 /**
  * Get port from environment and store in Express.
@@ -22,6 +23,7 @@ app.set("port", port);
  */
 
 const server = http.createServer(app);
+apolloServer.installSubscriptionHandlers(server);
 
 /**
  * Listen on provided port, on all network interfaces.

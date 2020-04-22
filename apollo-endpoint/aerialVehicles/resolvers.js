@@ -1,3 +1,5 @@
+const { withFilter } = require("apollo-server");
+
 const VEHICLE_UPDATED = "VEHICLE_UPDATED";
 
 const resolvers = {
@@ -17,19 +19,24 @@ const resolvers = {
       { vehicle, task },
       { eventBus, dataSources }
     ) => {
-      const taskList = await dataSources.vehiclesModel.cancelVehicleTask(
+      const updatedVehicle = await dataSources.vehiclesModel.cancelVehicleTask(
         vehicle,
         task
       );
-      eventBus.publish(VEHICLE_UPDATED);
-      return taskList;
+      eventBus.publish(VEHICLE_UPDATED, updatedVehicle);
+      return updatedVehicle;
     },
   },
   Subscription: {
-    vehicleUpdated: {
-      subscribe: ({ eventBus }) => {
-        return null;
+    updatedVehicle: {
+      resolve: (payload) => {
+        return payload;
       },
+      subscribe: withFilter(
+        (_, args, { eventBus }) => eventBus.asyncIterator([VEHICLE_UPDATED]),
+        ({ id: updatedVehicle }, { id: observedVehicle }) =>
+          updatedVehicle === observedVehicle
+      ),
     },
   },
 };
