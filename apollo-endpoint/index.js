@@ -2,15 +2,20 @@ const { ApolloServer, gql, PubSub } = require("apollo-server-express");
 const GraphQLJSON = require("graphql-type-json");
 const {
   FeatureCollectionObject,
-  CoordinatesScalar
+  CoordinatesScalar,
 } = require("graphql-geojson");
 
 const mapOptions = require("./mapOptions");
 const mapLayers = require("./mapLayers");
 const mapLayerSchemes = require("./mapLayerSchemes");
 const mapLayerObjects = require("./mapLayerObjects");
+const aerialVehicles = require("./aerialVehicles");
 
-const { LayerSchemesModel, LayerGeodataModel } = require("./dataSources");
+const {
+  LayerSchemesModel,
+  LayerGeodataModel,
+  VehiclesModel,
+} = require("./dataSources");
 
 const eventBus = new PubSub();
 
@@ -21,13 +26,14 @@ const typeDef = gql`
   scalar CoordinatesScalar
 
   type Query
-  # type Subscription
+  type Mutation
+  type Subscription
 `;
 
 const resolvers = {
   JSON: GraphQLJSON,
   FeatureCollection: FeatureCollectionObject,
-  CoordinatesScalar: CoordinatesScalar
+  CoordinatesScalar: CoordinatesScalar,
 };
 
 const server = new ApolloServer({
@@ -36,25 +42,26 @@ const server = new ApolloServer({
     mapOptions.typeDef,
     mapLayers.typeDef,
     mapLayerSchemes.typeDef,
-    mapLayerObjects.typeDef
+    mapLayerObjects.typeDef,
+    aerialVehicles.typeDef,
   ],
   resolvers: [
     resolvers,
     mapOptions.resolvers,
     mapLayers.resolvers,
     mapLayerSchemes.resolvers,
-    mapLayerObjects.resolvers
+    mapLayerObjects.resolvers,
+    aerialVehicles.resolvers,
   ],
   context: () => ({
-    eventBus
+    eventBus,
   }),
   dataSources: () => ({
     mapOptionsModel: new mapOptions.Model(),
     layerGeodataModel: new LayerGeodataModel(),
-    layerSchemesModel: new LayerSchemesModel()
-  })
+    layerSchemesModel: new LayerSchemesModel(),
+    vehiclesModel: new VehiclesModel(),
+  }),
 });
 
-module.exports = ({ app, path }) => {
-  server.applyMiddleware({ app, path });
-};
+module.exports = server;
