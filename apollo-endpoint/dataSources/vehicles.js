@@ -3,6 +3,10 @@ const config = require("config");
 
 const mockVehicle = {
   id: "1_aerial_vehicle",
+  telemetry: {
+    battery: 0.99,
+    lastActivity: "10:38:57",
+  },
   tasks: [
     {
       id: "1_task",
@@ -14,6 +18,10 @@ const mockVehicle = {
 let mockVehiclesList = [
   {
     id: "1_aerial_vehicle",
+    telemetry: {
+      battery: 0.99,
+      lastActivity: "15:48:23",
+    },
     tasks: [
       {
         id: "1_task",
@@ -139,6 +147,10 @@ let mockVehiclesList = [
   },
   {
     id: "2_aerial_vehicle",
+    telemetry: {
+      battery: 0.38,
+      lastActivity: "10:38:57",
+    },
     tasks: [
       {
         id: "2_task",

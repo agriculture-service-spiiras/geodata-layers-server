@@ -18,7 +18,13 @@ const typeDef = gql`
 
   type AerialVehicle {
     id: ID!
+    telemetry: VehicleTelemetry!
     tasks: [VehicleTask]!
+  }
+
+  type VehicleTelemetry {
+    battery: Float!
+    lastActivity: String!
   }
 
   type VehicleTask {
