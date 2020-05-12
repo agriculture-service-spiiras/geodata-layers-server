@@ -6,8 +6,8 @@ const resolvers = {
   MapLayer: {
     objectsGeodata: ({ dataSource }, args, { dataSources }) => {
       return dataSources.layerGeodataModel.getLayerObjects(dataSource);
-    }
-  }
+    },
+  },
   // Subscription: {
   //   mapLayerObjectsUpdated: {
   //     subscribe: withFilter(
@@ -19,5 +19,5 @@ const resolvers = {
 };
 
 module.exports = {
-  resolvers
+  resolvers,
 };

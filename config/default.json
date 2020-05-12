@@ -2,6 +2,7 @@
   "PORT": 3001,
   "routes": {
     "mapLayerSchemes": "http://localhost:3020",
-    "mapLayerObjects": "http://localhost:3021"
+    "mapLayerObjects": "http://localhost:3021",
+    "vehicles": "http://localhost:3022"
   }
 }
