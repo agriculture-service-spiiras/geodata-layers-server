@@ -3,6 +3,7 @@ const { gql } = require("apollo-server-express");
 const typeDef = gql`
   extend type Query {
     getMapLayer(id: ID!): MapLayer
+    unfoldMapLayer(id: ID!): [MapLayer!]
     getMapLayers: [MapLayer]!
   }
 

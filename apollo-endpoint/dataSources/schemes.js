@@ -1,3 +1,4 @@
+const { flatMap } = require("lodash");
 const { RESTDataSource } = require("apollo-datasource-rest");
 const config = require("config");
 
@@ -25,6 +26,30 @@ class SchemesAPI extends RESTDataSource {
     }
 
     return foundSchemes;
+  }
+
+  async unfoldScheme(id) {
+    const foundScheme = await this.get(`schemes/${id}?$eager=childLayers.^`);
+
+    if (!foundScheme) {
+      return null;
+    }
+
+    const unfoldedScheme = unfoldSchemeChildren(foundScheme);
+
+    return unfoldedScheme;
+
+    function unfoldSchemeChildren(scheme) {
+      return unfold([scheme], []);
+
+      function unfold(schemes, unfolded) {
+        if (schemes.length === 0) return unfolded;
+        return unfold(
+          flatMap(schemes, ({ childLayers }) => childLayers),
+          unfolded.concat(schemes)
+        );
+      }
+    }
   }
 
   async getRelatedScheme(id, relations) {
