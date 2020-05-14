@@ -1,6 +1,10 @@
 const { gql } = require("apollo-server-express");
 
 const typeDef = gql`
+  extend type Query {
+    unfoldMapLayerSchemes(id: ID!): [MapLayer!]
+  }
+
   extend type MapLayer {
     dataSource: String!
     objectsSchemes: [MapLayerSchemeObject]!
@@ -23,5 +27,5 @@ const typeDef = gql`
 `;
 
 module.exports = {
-  typeDef
+  typeDef,
 };

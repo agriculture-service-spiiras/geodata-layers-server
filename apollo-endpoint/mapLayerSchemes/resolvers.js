@@ -4,6 +4,11 @@ const extractRelateProperty = async (id, relation, model) => {
 };
 
 const resolvers = {
+  Query: {
+    unfoldMapLayerSchemes: async (parent, { id }, { dataSources }) => {
+      return dataSources.layerSchemesModel.unfoldScheme(id);
+    },
+  },
   MapLayer: {
     objectsSchemes: ({ id }, args, { dataSources }) => {
       return extractRelateProperty(
@@ -25,18 +30,18 @@ const resolvers = {
         "childLayers",
         dataSources.layerSchemesModel
       );
-    }
+    },
   },
   MapLayerSchemeObject: {
-    format: object => object["objectFormat"]
+    format: (object) => object["objectFormat"],
   },
   MapLayerSchemeService: {
-    options: service => {
+    options: (service) => {
       return service["serviceOptions"];
-    }
-  }
+    },
+  },
 };
 
 module.exports = {
-  resolvers
+  resolvers,
 };
