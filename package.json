@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "apollo-datasource-rest": "^0.7.0",
-    "apollo-server": "^2.10.0",
+    "apollo-server": "^2.25.3",
     "apollo-server-express": "^2.10.0",
     "config": "^3.2.5",
     "cookie-parser": "~1.4.4",
