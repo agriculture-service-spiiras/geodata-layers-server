@@ -16,7 +16,7 @@
     "cors": "^2.8.5",
     "dataloader": "^2.0.0",
     "debug": "~2.6.9",
-    "express": "~4.16.1",
+    "express": "~4.17.3",
     "graphql": "^14.6.0",
     "graphql-geojson": "^1.0.0",
     "graphql-type-json": "^0.3.1",
